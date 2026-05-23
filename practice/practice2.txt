@@ -1,0 +1,21 @@
+abstract class User {
+    constructor(
+        protected firstName:string,
+        protected lastName:string,
+        protected nickName:string
+    ) {}
+    abstract getNickName():void
+
+    getFullName(){
+        return `${this.firstName} ${this.lastName}`
+    }
+}
+class Player extends User{
+    getNickName()
+    {
+        console.log(this.nickName);
+    }
+}
+
+const bokjoo = new Player("yeonjun","choi","bokjoo");
+bokjoo.getFullName();

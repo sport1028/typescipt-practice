@@ -1,0 +1,94 @@
+
+// 타입스크립트 사용법
+// 타입스크립트 타입 선언
+type Age = number;
+type Name = string;
+type Player = {
+    age?: Age,
+    name: Name,
+}
+const playerMaker = (name:string) : Player => ({name})
+
+const playerName = playerMaker("bokjoo");
+console.log(playerName);
+
+// Call Signatures Start
+type Add = (a:number, b:number) => number
+const addFunc:Add = (a, b) => a + b;
+// Call Signatures End
+
+// Overloading Start
+// #1
+type Config = {
+    path:string,
+    state:string
+}
+
+type Push = {
+    (path: string): void
+    (config: Config): void
+}
+
+const push:Push = (config) => {
+    if(typeof config === "string")
+    {
+        console.log(config);
+    }
+    else
+    {
+        console.log(config.path, config.state);
+    }
+}
+// #2
+type Add2 = {
+    (a:number,b:number) : number,
+    (a:number,b:number,c:number):number
+}
+
+const add2: Add2 = (a,b,c?:number) => {
+
+    if(c)
+        return a + b + c
+    else
+        return a + b
+}
+add2(1,2,3)
+add2(3,4)
+
+// Overloading End
+
+// 다형성 Poly
+
+type SuperPrint = {
+    <T>(arr:T[]): T
+}
+
+const superprint: SuperPrint =  (arr) => {
+    arr.forEach((item)=> console.log(item))
+    return arr[0];
+}
+
+superprint([1,2,3])
+superprint([true,false])
+
+
+// generic example
+
+type Player2<E> = {
+    name: string
+    extraInfo: E
+}
+
+type BokjooExtra = {
+    favFood: string
+}
+
+type BokjooPlayer = Player2<BokjooExtra>
+
+
+const bokjoo: BokjooPlayer = {
+    name: "bokjoo",
+    extraInfo: {
+        favFood: "분유"
+    }
+}
